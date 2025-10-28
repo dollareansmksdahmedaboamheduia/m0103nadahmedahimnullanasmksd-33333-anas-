@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Macho Premium Menu</title>
+    <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Cairo', 'Segoe UI', sans-serif;
+            background: transparent;
+            color: white;
+            overflow: hidden;
+            direction: rtl;
+        }
+
+        .menu-container {
+            position: fixed;
+            top: 50%;
+            left: 6.5vh;
+            transform: translateY(-50%);
+            width: 35vh;
+            opacity: 0;
+            transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .menu-container.show {
+            opacity: 1;
+        }
+
+        .menu-container.right {
+            left: auto;
+            right: 6.5vh;
+        }
+
+        /* Banner */
+        .menu-banner {
+            width: 100%;
+            height: 9.5vh;
+            border-radius: 0.8vh 0.8vh 0 0;
+            overflow: hidden;
+            position: relative;
+            margin-bottom: -0.2vh;
+        }
+
+        .menu-banner img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        .menu-banner::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 50%;
+            background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+        }
+
+        /* Tabs */
+        .menu-tabs {
+            display: flex;
+            background: #000;
+            border-radius: 0 0 0.4vh 0.4vh;
+            overflow: hidden;
+        }
+
+        .menu-tab {
+            flex: 1;
+            text-align: center;
+            padding: 1.5vh;
+            font-size: 1.15vh;
+            font-weight: 500;
+            color: white;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+            background: transparent;
+        }
+
+        .menu-tab.active {
+            background: linear-gradient(0deg, #ff0000 0%, transparent 100%);
+        }
+
+        .menu-tab.single {
+            cursor: default;
+            background: linear-gradient(0deg, #ff0000 0%, transparent 100%);
+        }
+
+        /* Scrollbar Custom */
+        .scrollbar-container {
+            position: absolute;
+            left: 0.5vh;
+            width: 0.6vh;
+            border-radius: 0.3vh;
+            background: rgba(0, 0, 0, 0.45);
+            pointer-events: none;
+            z-index: 100;
+            transition: opacity 0.2s ease;
+        }
+
+        .scrollbar-container.hidden {
+            opacity: 0;
+        }
+
+        .scrollbar-thumb {
+            position: absolute;
+            left: 0;
+            right: 0;
+            top: 0;
+            background: #ff0000;
+            border-radius: 0.3vh;
+            transition: top 0.08s linear, height 0.12s ease;
+        }
+
+        /* Menu List */
+        .menu-list-wrapper {
+            background: rgba(0, 0, 0, 0.85);
+            border-radius: 0.4vh;
+            margin-top: 0.3vh;
+            position: relative;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .menu-list {
+            max-height: 33.6vh;
+            overflow-y: auto;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .menu-list::-webkit-scrollbar {
+            display: none;
+        }
+
+        /* Menu Items */
+        .menu-item {
+            padding: 0.9vh 1.2vh;
+            color: white;
+            border-radius: 0.3vh;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-size: 1.3vh;
+            font-weight: 400;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+            gap: 1vh;
+            margin: 0.2vh 0;
+        }
+
+        .menu-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 0;
+            background: #ff0000;
+            transition: width 0.2s ease;
+        }
+
+        .menu-item.active {
+            background: rgba(100, 0, 0, 0.6);
+        }
+
+        .menu-item.active::before {
+            width: 0.3vh;
+        }
+
+        .menu-item-label {
+            flex: 1;
+            text-align: right;
+            font-size: 1.2vh;
+        }
+
+        .menu-item-value {
+            display: flex;
+            align-items: center;
+            gap: 0.5vh;
+        }
+
+        /* Divider */
+        .menu-divider {
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 2.2vh;
+            margin: 0.8vh 0;
+            pointer-events: none;
+        }
+
+        .menu-divider span {
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1.0vh;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            padding: 0 1vh;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 1;
+        }
+
+        .menu-divider::before {
+            content: '';
+            position: absolute;
+            left: 1.2vh;
+            right: 1.2vh;
+            height: 0.15vh;
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(255, 0, 0, 0.5) 20%, 
+                rgba(255, 0, 0, 0.5) 80%, 
+                transparent
+            );
+        }
+
+        /* Toggle Switch */
+        .toggle {
+            appearance: none;
+            width: 3.3vh;
+            height: 1.5vh;
+            background: #222;
+            border-radius: 1vh;
+            position: relative;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .toggle::before {
+            content: '';
+            position: absolute;
+            width: 1.1vh;
+            height: 1.1vh;
+            border-radius: 50%;
+            background: white;
+            top: 0.2vh;
+            left: 0.2vh;
+            transition: transform 0.2s ease;
+        }
+
+        .toggle.on {
+            background: rgba(255, 0, 0, 0.3);
+        }
+
+        .toggle.on::before {
+            background: #ff0000;
+            transform: translateX(1.65vh);
+        }
+
+        /* Slider */
+        .range {
+            width: 7.5vh;
+            height: 1.2vh;
+            background: transparent;
+            outline: none;
+            border: 0;
+            -webkit-appearance: none;
+        }
+
+        .range::-webkit-slider-runnable-track {
+            height: 0.55vh;
+            border-radius: 0.75vh;
+            background: linear-gradient(
+                to right,
+                #ff0000 0 var(--pct),
+                #2e2e2e var(--pct) 100%
+            );
+        }
+
+        .range::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 1.1vh;
+            height: 1.1vh;
+            margin-top: -0.3vh;
+            border-radius: 50%;
+            background: #fff;
+            cursor: pointer;
+            transition: transform 0.1s ease;
+        }
+
+        .range:active::-webkit-slider-thumb {
+            transform: scale(1.15);
+        }
+
+        /* Scroll Options */
+        .scroll-option {
+            display: flex;
+            align-items: center;
+            gap: 0.6vh;
+            font-size: 1.2vh;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .scroll-arrow {
+            color: #ff0000;
+            font-size: 1.0vh;
+        }
+
+        /* Footer */
+        .menu-footer {
+            margin-top: 0.5vh;
+            background: #000;
+            border-radius: 0.4vh;
+            padding: 0.8vh 1.2vh;
+            font-size: 1.1vh;
+            color: #ffffff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .footer-version {
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .footer-counter {
+            font-weight: 500;
+            color: #ff0000;
+        }
+
+        /* Icons */
+        .ph {
+            font-size: 1.4vh;
+        }
+
+        /* Animations */
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-50%) translateX(-2vh);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(-50%) translateX(0);
+            }
+        }
+
+        .menu-container.show {
+            animation: slideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+    </style>
+</head>
+<body>
+    <div id="menuContainer" class="menu-container">
+        <!-- Scrollbar -->
+        <div id="scrollbarContainer" class="scrollbar-container hidden">
+            <div id="scrollbarThumb" class="scrollbar-thumb"></div>
+        </div>
+
+        <!-- Banner -->
+        <div class="menu-banner">
+            <img id="bannerImage" src="https://media.discordapp.net/attachments/1395189125044240425/1432825938655187065/IpOt9Nc.jpg?ex=690276a4&is=69012524&hm=5ea058fdb88fb75037dbdd238505ac29a50e210c407dfba60ca05d91dccae9bc&=&format=png&width=550&height=309" alt="Banner">
+        </div>
+
+        <!-- Tabs -->
+        <div id="menuTabs" class="menu-tabs"></div>
+
+        <!-- Menu List -->
+        <div class="menu-list-wrapper">
+            <div id="menuList" class="menu-list"></div>
+        </div>
+
+        <!-- Footer -->
+        <div class="menu-footer">
+            <span class="footer-version">Beta 1.3 [Premium Edition]</span>
+            <span class="footer-counter" id="footerCounter">(0/0)</span>
+        </div>
+    </div>
+
+    <script>
+        let currentIndex = 0;
+        let menuItems = [];
+        let tabs = ['Main Menu'];
+        let currentTab = 0;
+        let isVisible = false;
+        let position = 'left';
+
+        const container = document.getElementById('menuContainer');
+        const menuList = document.getElementById('menuList');
+        const tabsContainer = document.getElementById('menuTabs');
+        const scrollbarContainer = document.getElementById('scrollbarContainer');
+        const scrollbarThumb = document.getElementById('scrollbarThumb');
+        const footerCounter = document.getElementById('footerCounter');
+        const bannerImage = document.getElementById('bannerImage');
+
+        // Message Handler
+        window.addEventListener('message', (event) => {
+            const data = event.data;
+            const action = data.action;
+
+            if (action === 'setCurrent') {
+                currentIndex = (data.current || 1) - 1;
+                menuItems = data.menu || [];
+                isVisible = true;
+                renderMenu();
+                updateScrollbar();
+            } else if (action === 'setTabs') {
+                tabs = data.tabs || ['Main Menu'];
+                currentTab = 0;
+                renderTabs();
+            } else if (action === 'setTabIndex') {
+                currentTab = data.index || 0;
+                renderTabs();
+            } else if (action === 'setVisible') {
+                isVisible = data.visible !== undefined ? data.visible : true;
+                container.classList.toggle('show', isVisible);
+            } else if (action === 'position') {
+                position = data.position || 'left';
+                container.classList.toggle('right', position === 'right');
+            } else if (action === 'banner') {
+                bannerImage.src = data.banner;
+            }
+        });
+
+        // Render Tabs
+        function renderTabs() {
+            tabsContainer.innerHTML = '';
+            if (tabs.length === 1) {
+                const tab = document.createElement('div');
+                tab.className = 'menu-tab single';
+                tab.textContent = tabs[0];
+                tabsContainer.appendChild(tab);
+            } else {
+                tabs.forEach((tabName, i) => {
+                    const tab = document.createElement('div');
+                    tab.className = 'menu-tab' + (i === currentTab ? ' active' : '');
+                    tab.textContent = tabName;
+                    tabsContainer.appendChild(tab);
+                });
+            }
+        }
+
+        // Render Menu
+        function renderMenu() {
+            menuList.innerHTML = '';
+            
+            menuItems.forEach((item, index) => {
+                if (item.type === 'divider') {
+                    const divider = document.createElement('div');
+                    divider.className = 'menu-divider';
+                    divider.innerHTML = `<span>${item.label || ''}</span>`;
+                    menuList.appendChild(divider);
+                    return;
+                }
+
+                const menuItem = document.createElement('div');
+                menuItem.className = 'menu-item' + (index === currentIndex ? ' active' : '');
+                
+                const label = document.createElement('span');
+                label.className = 'menu-item-label';
+                label.textContent = item.label || '';
+
+                const value = document.createElement('div');
+                value.className = 'menu-item-value';
+
+                if (item.type === 'submenu') {
+                    value.innerHTML = '<i class="ph ph-caret-right"></i>';
+                } else if (item.type === 'checkbox') {
+                    const toggle = document.createElement('div');
+                    toggle.className = 'toggle' + (item.checked ? ' on' : '');
+                    value.appendChild(toggle);
+                } else if (item.type === 'slider') {
+                    const slider = document.createElement('input');
+                    slider.type = 'range';
+                    slider.className = 'range';
+                    slider.min = item.min || 0;
+                    slider.max = item.max || 100;
+                    slider.step = item.step || 1;
+                    slider.value = item.value || 50;
+                    slider.style.setProperty('--pct', `${(slider.value / slider.max) * 100}%`);
+                    slider.addEventListener('input', (e) => {
+                        e.target.style.setProperty('--pct', `${(e.target.value / e.target.max) * 100}%`);
+                    });
+                    value.appendChild(slider);
+                } else if (item.type === 'scroll') {
+                    const selected = item.selected || 0;
+                    const option = item.options && item.options[selected] ? item.options[selected].label : '';
+                    value.innerHTML = `
+                        <div class="scroll-option">
+                            <span class="scroll-arrow">◄</span>
+                            <span>${option}</span>
+                            <span class="scroll-arrow">►</span>
+                        </div>
+                    `;
+                }
+
+                menuItem.appendChild(label);
+                menuItem.appendChild(value);
+                menuList.appendChild(menuItem);
+            });
+
+            updateCounter();
+            centerOnSelected();
+        }
+
+        // Update Counter
+        function updateCounter() {
+            const selectableItems = menuItems.filter(item => item.type !== 'divider');
+            const selectableIndices = menuItems
+                .map((item, i) => item.type !== 'divider' ? i : -1)
+                .filter(i => i !== -1);
+            
+            const pos = selectableIndices.indexOf(currentIndex);
+            const current = pos !== -1 ? pos + 1 : 0;
+            
+            footerCounter.textContent = `(${current}/${selectableItems.length})`;
+        }
+
+        // Center on Selected
+        function centerOnSelected() {
+            const items = menuList.querySelectorAll('.menu-item');
+            const activeItem = items[currentIndex];
+            
+            if (activeItem) {
+                const itemTop = activeItem.offsetTop;
+                const itemHeight = activeItem.offsetHeight;
+                const listHeight = menuList.clientHeight;
+                const targetScroll = itemTop - (listHeight / 2) + (itemHeight / 2);
+                
+                menuList.scrollTop = Math.max(0, targetScroll);
+            }
+        }
+
+        // Update Scrollbar
+        function updateScrollbar() {
+            const hasOverflow = menuList.scrollHeight > menuList.clientHeight;
+            
+            if (!isVisible || menuItems.length === 0) {
+                scrollbarContainer.classList.add('hidden');
+                return;
+            }
+
+            scrollbarContainer.classList.remove('hidden');
+
+            const listRect = menuList.getBoundingClientRect();
+            const trackHeight = listRect.height;
+            
+            scrollbarContainer.style.top = `${listRect.top - container.getBoundingClientRect().top}px`;
+            scrollbarContainer.style.height = `${trackHeight}px`;
+
+            let thumbHeight = 24;
+            if (hasOverflow) {
+                const ratio = menuList.clientHeight / menuList.scrollHeight;
+                thumbHeight = Math.max(18, trackHeight * ratio);
+            }
+
+            scrollbarThumb.style.height = `${thumbHeight}px`;
+
+            const maxScroll = Math.max(0, menuList.scrollHeight - menuList.clientHeight);
+            const scrollRatio = maxScroll > 0 ? menuList.scrollTop / maxScroll : 0;
+            const maxThumbTop = trackHeight - thumbHeight;
+            scrollbarThumb.style.top = `${maxThumbTop * scrollRatio}px`;
+        }
+
+        menuList.addEventListener('scroll', updateScrollbar);
+
+        // Initialize
+        renderTabs();
+        container.classList.toggle('show', isVisible);
+        
+        console.log('Macho DUI Premium Menu Loaded! 🔥');
+    </script>
+</body>
+</html>
