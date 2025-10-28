@@ -367,6 +367,73 @@
         .menu-container.show {
             animation: slideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
+
+        /* Input Box Container */
+        .input-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(10, 6, 20, 0.95);
+            border-radius: 0.5vh;
+            padding: 1.5vh;
+            box-shadow: 0 0 2vh rgba(255, 0, 0, 0.5);
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 0, 0, 0.3);
+            width: 25vh;
+        }
+
+        .input-box {
+            width: 100%;
+            padding: 0.8vh;
+            background: rgba(30, 20, 40, 0.8);
+            border: 1px solid rgba(255, 0, 0, 0.3);
+            border-radius: 0.3vh;
+            color: white;
+            font-family: 'Cairo', sans-serif;
+            font-size: 1.2vh;
+            margin-bottom: 1vh;
+        }
+
+        .input-box:focus {
+            outline: none;
+            border-color: #ff5555;
+            box-shadow: 0 0 0.8vh rgba(255, 85, 85, 0.3);
+        }
+
+        .input-buttons {
+            display: flex;
+            gap: 1vh;
+        }
+
+        .input-btn {
+            flex: 1;
+            padding: 0.8vh;
+            border: none;
+            border-radius: 0.3vh;
+            color: white;
+            font-family: 'Cairo', sans-serif;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .input-btn.submit {
+            background: linear-gradient(to bottom, #ff3333, #cc0000);
+        }
+
+        .input-btn.submit:hover {
+            background: linear-gradient(to bottom, #ff5555, #dd0000);
+        }
+
+        .input-btn.cancel {
+            background: linear-gradient(to bottom, #444, #222);
+        }
+
+        .input-btn.cancel:hover {
+            background: linear-gradient(to bottom, #666, #444);
+        }
     </style>
 </head>
 <body>
@@ -396,6 +463,15 @@
         </div>
     </div>
 
+    <!-- Input Box Container -->
+    <div id="inputBoxContainer" class="input-container" style="display: none;">
+        <input type="text" id="inputBox" class="input-box" placeholder="Enter text here...">
+        <div class="input-buttons">
+            <button id="inputSubmit" class="input-btn submit">Submit</button>
+            <button id="inputCancel" class="input-btn cancel">Cancel</button>
+        </div>
+    </div>
+
     <script>
         let currentIndex = 0;
         let menuItems = [];
@@ -403,6 +479,7 @@
         let currentTab = 0;
         let isVisible = false;
         let position = 'left';
+        let inputCallback = null; // لتخزين callback ID مؤقتًا
 
         const container = document.getElementById('menuContainer');
         const menuList = document.getElementById('menuList');
@@ -411,6 +488,10 @@
         const scrollbarThumb = document.getElementById('scrollbarThumb');
         const footerCounter = document.getElementById('footerCounter');
         const bannerImage = document.getElementById('bannerImage');
+        const inputContainer = document.getElementById('inputBoxContainer');
+        const inputBox = document.getElementById('inputBox');
+        const inputSubmit = document.getElementById('inputSubmit');
+        const inputCancel = document.getElementById('inputCancel');
 
         window.addEventListener('message', (event) => {
             const data = event.data;
@@ -438,7 +519,40 @@
             } else if (action === 'banner') {
                 bannerImage.src = data.banner;
             }
+            // 👇 معالجة عرض Input Box
+            else if (action === 'showInputBox') {
+                inputCallback = data.callbackId;
+                inputBox.placeholder = data.placeholder || "Enter text...";
+                inputBox.value = "";
+                inputContainer.style.display = 'block';
+            }
         });
+
+        // أزرار Input Box
+        inputSubmit.addEventListener('click', () => {
+            const text = inputBox.value;
+            if (inputCallback) {
+                window.parent.postMessage({ action: 'inputSubmitted', callbackId: inputCallback, text: text }, '*');
+            }
+            inputContainer.style.display = 'none';
+            inputCallback = null;
+        });
+
+        inputCancel.addEventListener('click', () => {
+            if (inputCallback) {
+                window.parent.postMessage({ action: 'inputCancelled', callbackId: inputCallback }, '*');
+            }
+            inputContainer.style.display = 'none';
+            inputCallback = null;
+        });
+
+        // دالة لعرض Input Box (متوفرة للـ Lua)
+        window.showInputBox = function(placeholder, callbackId) {
+            inputCallback = callbackId;
+            inputBox.placeholder = placeholder || "Enter text...";
+            inputBox.value = "";
+            inputContainer.style.display = 'block';
+        };
 
         function renderTabs() {
             tabsContainer.innerHTML = '';
@@ -479,7 +593,6 @@
                 const value = document.createElement('div');
                 value.className = 'menu-item-value';
 
-                // 👇 الأسطر المطلوبة مضافة هنا
                 if (item.isSection) {
                     value.innerHTML = '<i class="ph ph-folder" style="color:#ff6666;"></i>';
                 }
