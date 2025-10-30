@@ -85,7 +85,7 @@
             padding: 1.5vh;
             font-size: 1.15vh;
             font-weight: 500;
-            color: #e0e0ff;
+            color: white;
             cursor: pointer;
             transition: all 0.2s ease;
             position: relative;
@@ -93,15 +93,12 @@
         }
 
         .menu-tab.active {
-            background: linear-gradient(0deg, rgba(180, 0, 0, 0.4), rgba(255, 0, 0, 0.2));
-            color: white;
-            box-shadow: inset 0 -0.2vh 0.3vh rgba(0, 0, 0, 0.3);
+            background: linear-gradient(0deg, #ff0000 0%, transparent 100%);
         }
 
         .menu-tab.single {
-            background: linear-gradient(0deg, rgba(180, 0, 0, 0.4), rgba(255, 0, 0, 0.2));
-            color: white;
             cursor: default;
+            background: linear-gradient(0deg, #ff0000 0%, transparent 100%);
         }
 
         /* Scrollbar Custom */
@@ -125,20 +122,19 @@
             left: 0;
             right: 0;
             top: 0;
-            background: linear-gradient(to bottom, #ff3333, #cc0000);
+            background: #ff0000;
             border-radius: 0.3vh;
             transition: top 0.08s linear, height 0.12s ease;
         }
 
         /* Menu List */
         .menu-list-wrapper {
-            background: rgba(10, 6, 20, 0.82);
+            background: rgba(0, 0, 0, 0.85);
             border-radius: 0.4vh;
             margin-top: 0.3vh;
             position: relative;
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(100, 0, 0, 0.25);
-            box-shadow: 0 0.3vh 1vh rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .menu-list {
@@ -176,12 +172,12 @@
             top: 0;
             bottom: 0;
             width: 0;
-            background: linear-gradient(to bottom, #ff4444, #cc0000);
+            background: #ff0000;
             transition: width 0.2s ease;
         }
 
         .menu-item.active {
-            background: rgba(40, 10, 20, 0.6);
+            background: rgba(100, 0, 0, 0.6);
         }
 
         .menu-item.active::before {
@@ -212,14 +208,13 @@
         }
 
         .menu-divider span {
-            color: rgba(255, 200, 200, 0.85);
+            color: rgba(255, 255, 255, 0.7);
             font-size: 1.0vh;
             font-weight: 600;
             letter-spacing: 0.05em;
             padding: 0 1vh;
-            background: rgba(10, 6, 20, 0.82);
+            background: rgba(0, 0, 0, 0.85);
             z-index: 1;
-            text-shadow: 0 0 0.5vh rgba(255, 0, 0, 0.3);
         }
 
         .menu-divider::before {
@@ -241,12 +236,11 @@
             appearance: none;
             width: 3.3vh;
             height: 1.5vh;
-            background: #2a233a;
+            background: #222;
             border-radius: 1vh;
             position: relative;
             cursor: pointer;
             transition: background 0.2s ease;
-            border: 1px solid rgba(100, 0, 0, 0.3);
         }
 
         .toggle::before {
@@ -258,16 +252,15 @@
             background: white;
             top: 0.2vh;
             left: 0.2vh;
-            transition: transform 0.2s ease, background 0.2s ease;
+            transition: transform 0.2s ease;
         }
 
         .toggle.on {
-            background: rgba(200, 0, 0, 0.3);
-            border-color: rgba(255, 0, 0, 0.5);
+            background: rgba(255, 0, 0, 0.3);
         }
 
         .toggle.on::before {
-            background: #ff5555;
+            background: #ff0000;
             transform: translateX(1.65vh);
         }
 
@@ -286,7 +279,7 @@
             border-radius: 0.75vh;
             background: linear-gradient(
                 to right,
-                #ff3333 0 var(--pct),
+                #ff0000 0 var(--pct),
                 #2e2e2e var(--pct) 100%
             );
         }
@@ -299,8 +292,7 @@
             border-radius: 50%;
             background: #fff;
             cursor: pointer;
-            transition: transform 0.1s ease, box-shadow 0.1s ease;
-            box-shadow: 0 0 0.5vh rgba(255, 0, 0, 0.6);
+            transition: transform 0.1s ease;
         }
 
         .range:active::-webkit-slider-thumb {
@@ -317,14 +309,14 @@
         }
 
         .scroll-arrow {
-            color: #ff5555;
+            color: #ff0000;
             font-size: 1.0vh;
         }
 
         /* Footer */
         .menu-footer {
             margin-top: 0.5vh;
-            background: rgba(8, 4, 15, 0.75);
+            background: #000;
             border-radius: 0.4vh;
             padding: 0.8vh 1.2vh;
             font-size: 1.1vh;
@@ -332,18 +324,17 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border: 1px solid rgba(100, 0, 0, 0.2);
-            backdrop-filter: blur(6px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .footer-version {
             font-weight: 500;
-            color: rgba(255, 220, 220, 0.85);
+            color: rgba(255, 255, 255, 0.8);
         }
 
         .footer-counter {
             font-weight: 500;
-            color: #ff5555;
+            color: #ff0000;
         }
 
         /* Icons */
@@ -543,7 +534,7 @@
 
         <!-- Banner -->
         <div class="menu-banner">
-            <img id="bannerImage" src="https://media.discordapp.net/attachments/1395189125044240425/1432825938655187065/IpOt9Nc.jpg?ex=690276a4&is=69012524&hm=5ea058fdb88fb75037dbdd238505ac29a50e210c407dfba60ca05d91dccae9bc&=&format=png&width=550&height=309" alt="Banner">
+            <img id="bannerImage" src="  https://media.discordapp.net/attachments/1395189125044240425/1432825938655187065/IpOt9Nc.jpg?ex=690276a4&is=69012524&hm=5ea058fdb88fb75037dbdd238505ac29a50e210c407dfba60ca05d91dccae9bc&=&format=png&width=550&height=309" alt="Banner">
         </div>
 
         <!-- Tabs -->
@@ -609,6 +600,7 @@
         const keybindingOverlay = document.getElementById('keybindingOverlay');
         const keybindingKey = document.getElementById('keybindingKey');
 
+        // Message Handler
         window.addEventListener('message', (event) => {
             const data = event.data;
             const action = data.action;
@@ -649,6 +641,7 @@
             }
         });
 
+        // Input Box Handlers
         inputSubmit.addEventListener('click', () => {
             const text = inputBox.value;
             if (inputCallback) {
@@ -666,6 +659,7 @@
             inputCallback = null;
         });
 
+        // Keybinding Handler
         window.addEventListener('keydown', (event) => {
             if (keybindingActive) {
                 event.preventDefault();
@@ -689,6 +683,7 @@
             keybindingCallback = null;
         }
 
+        // Notification System
         function showNotification(title, message) {
             const notification = document.createElement('div');
             notification.className = 'notification';
@@ -704,6 +699,7 @@
             }, 3000);
         }
 
+        // Render Tabs
         function renderTabs() {
             tabsContainer.innerHTML = '';
             if (tabs.length === 1) {
@@ -721,6 +717,7 @@
             }
         }
 
+        // Render Menu
         function renderMenu() {
             menuList.innerHTML = '';
             
@@ -785,6 +782,7 @@
             centerOnSelected();
         }
 
+        // Update Counter
         function updateCounter() {
             const selectableItems = menuItems.filter(item => item.type !== 'divider');
             const selectableIndices = menuItems
@@ -797,6 +795,7 @@
             footerCounter.textContent = `(${current}/${selectableItems.length})`;
         }
 
+        // Center on Selected
         function centerOnSelected() {
             const items = menuList.querySelectorAll('.menu-item');
             const activeItem = items[currentIndex];
@@ -811,6 +810,7 @@
             }
         }
 
+        // Update Scrollbar
         function updateScrollbar() {
             const hasOverflow = menuList.scrollHeight > menuList.clientHeight;
             
