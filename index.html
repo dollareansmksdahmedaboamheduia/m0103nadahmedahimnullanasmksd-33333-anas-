@@ -16,7 +16,7 @@
 
         body {
             font-family: 'Cairo', 'Segoe UI', sans-serif;
-            background: transparent; /* خلفية شفافة */
+            background: transparent;
             color: white;
             overflow: hidden;
             direction: rtl;
@@ -41,6 +41,7 @@
             right: 6.5vh;
         }
 
+        /* Banner */
         .menu-banner {
             width: 100%;
             height: 9.5vh;
@@ -68,9 +69,10 @@
             background: linear-gradient(to top, rgba(0,0,0,0.85), transparent);
         }
 
-                .menu-tabs {
+        /* Tabs */
+        .menu-tabs {
             display: flex;
-            background: transparent;
+            background: rgba(8, 4, 15, 0.75);
             border-radius: 0 0 0.4vh 0.4vh;
             overflow: hidden;
             backdrop-filter: blur(6px);
@@ -82,8 +84,8 @@
             text-align: center;
             padding: 1.5vh;
             font-size: 1.15vh;
-            font-weight: 600;
-            color: #e0e0ff;
+            font-weight: 500;
+            color: white;
             cursor: pointer;
             transition: all 0.2s ease;
             position: relative;
@@ -91,23 +93,21 @@
         }
 
         .menu-tab.active {
-            background: linear-gradient(90deg, rgba(180, 0, 0, 0.4), rgba(255, 0, 0, 0.2));
-            color: white;
-            box-shadow: inset 0 -0.2vh 0.3vh rgba(0, 0, 0, 0.3);
+            background: linear-gradient(0deg, #ff0000 0%, transparent 100%);
         }
 
         .menu-tab.single {
-            background: linear-gradient(90deg, rgba(180, 0, 0, 0.4), rgba(255, 0, 0, 0.2));
-            color: white;
             cursor: default;
+            background: linear-gradient(0deg, #ff0000 0%, transparent 100%);
         }
 
+        /* Scrollbar Custom */
         .scrollbar-container {
             position: absolute;
             left: 0.5vh;
             width: 0.6vh;
             border-radius: 0.3vh;
-            background: rgba(0, 0, 0, 0.4);
+            background: rgba(0, 0, 0, 0.45);
             pointer-events: none;
             z-index: 100;
             transition: opacity 0.2s ease;
@@ -122,19 +122,19 @@
             left: 0;
             right: 0;
             top: 0;
-            background: linear-gradient(to bottom, #ff3333, #cc0000);
+            background: #ff0000;
             border-radius: 0.3vh;
             transition: top 0.08s linear, height 0.12s ease;
         }
 
+        /* Menu List */
         .menu-list-wrapper {
-            background: rgba(10, 6, 20, 0.82);
+            background: rgba(0, 0, 0, 0.85);
             border-radius: 0.4vh;
             margin-top: 0.3vh;
             position: relative;
             backdrop-filter: blur(10px);
-            border: 1px solid rgba(100, 0, 0, 0.25);
-            box-shadow: 0 0.3vh 1vh rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .menu-list {
@@ -148,15 +148,16 @@
             display: none;
         }
 
+        /* Menu Items */
         .menu-item {
             padding: 0.9vh 1.2vh;
-            color: #f0f0ff;
+            color: white;
             border-radius: 0.3vh;
             display: flex;
             align-items: center;
             justify-content: space-between;
             font-size: 1.3vh;
-            font-weight: 500;
+            font-weight: 400;
             cursor: pointer;
             transition: all 0.2s ease;
             position: relative;
@@ -171,22 +172,22 @@
             top: 0;
             bottom: 0;
             width: 0;
-            background: linear-gradient(to bottom, #ff4444, #cc0000);
+            background: #ff0000;
             transition: width 0.2s ease;
         }
 
         .menu-item.active {
-            background: rgba(40, 10, 20, 0.6);
+            background: rgba(100, 0, 0, 0.6);
         }
 
         .menu-item.active::before {
-            width: 0.35vh;
+            width: 0.3vh;
         }
 
         .menu-item-label {
             flex: 1;
             text-align: right;
-            font-size: 1.25vh;
+            font-size: 1.2vh;
         }
 
         .menu-item-value {
@@ -195,6 +196,7 @@
             gap: 0.5vh;
         }
 
+        /* Divider */
         .menu-divider {
             position: relative;
             display: flex;
@@ -206,14 +208,13 @@
         }
 
         .menu-divider span {
-            color: rgba(255, 200, 200, 0.85);
-            font-size: 1.05vh;
-            font-weight: 700;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 1.0vh;
+            font-weight: 600;
             letter-spacing: 0.05em;
             padding: 0 1vh;
-            background: rgba(10, 6, 20, 0.82);
+            background: rgba(0, 0, 0, 0.85);
             z-index: 1;
-            text-shadow: 0 0 0.5vh rgba(255, 0, 0, 0.3);
         }
 
         .menu-divider::before {
@@ -224,22 +225,22 @@
             height: 0.15vh;
             background: linear-gradient(90deg, 
                 transparent, 
-                rgba(255, 50, 50, 0.6) 20%, 
-                rgba(255, 50, 50, 0.6) 80%, 
+                rgba(255, 0, 0, 0.5) 20%, 
+                rgba(255, 0, 0, 0.5) 80%, 
                 transparent
             );
         }
 
+        /* Toggle Switch */
         .toggle {
             appearance: none;
             width: 3.3vh;
             height: 1.5vh;
-            background: #2a233a;
+            background: #222;
             border-radius: 1vh;
             position: relative;
             cursor: pointer;
             transition: background 0.2s ease;
-            border: 1px solid rgba(100, 0, 0, 0.3);
         }
 
         .toggle::before {
@@ -248,22 +249,22 @@
             width: 1.1vh;
             height: 1.1vh;
             border-radius: 50%;
-            background: #ddd;
+            background: white;
             top: 0.2vh;
             left: 0.2vh;
-            transition: transform 0.2s ease, background 0.2s ease;
+            transition: transform 0.2s ease;
         }
 
         .toggle.on {
-            background: rgba(200, 0, 0, 0.4);
-            border-color: rgba(255, 0, 0, 0.5);
+            background: rgba(255, 0, 0, 0.3);
         }
 
         .toggle.on::before {
-            background: #ff5555;
+            background: #ff0000;
             transform: translateX(1.65vh);
         }
 
+        /* Slider */
         .range {
             width: 7.5vh;
             height: 1.2vh;
@@ -278,8 +279,8 @@
             border-radius: 0.75vh;
             background: linear-gradient(
                 to right,
-                #ff3333 0 var(--pct),
-                #3a3255 var(--pct) 100%
+                #ff0000 0 var(--pct),
+                #2e2e2e var(--pct) 100%
             );
         }
 
@@ -291,14 +292,14 @@
             border-radius: 50%;
             background: #fff;
             cursor: pointer;
-            transition: transform 0.1s ease, box-shadow 0.1s ease;
-            box-shadow: 0 0 0.5vh rgba(255, 0, 0, 0.6);
+            transition: transform 0.1s ease;
         }
 
         .range:active::-webkit-slider-thumb {
-            transform: scale(1.25);
+            transform: scale(1.15);
         }
 
+        /* Scroll Options */
         .scroll-option {
             display: flex;
             align-items: center;
@@ -308,13 +309,14 @@
         }
 
         .scroll-arrow {
-            color: #ff5555;
+            color: #ff0000;
             font-size: 1.0vh;
         }
 
+        /* Footer */
         .menu-footer {
             margin-top: 0.5vh;
-            background: rgba(8, 4, 15, 0.75);
+            background: #000;
             border-radius: 0.4vh;
             padding: 0.8vh 1.2vh;
             font-size: 1.1vh;
@@ -322,24 +324,25 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border: 1px solid rgba(100, 0, 0, 0.2);
-            backdrop-filter: blur(6px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
         }
 
         .footer-version {
-            font-weight: 600;
-            color: rgba(255, 220, 220, 0.85);
+            font-weight: 500;
+            color: rgba(255, 255, 255, 0.8);
         }
 
         .footer-counter {
-            font-weight: 700;
-            color: #ff5555;
+            font-weight: 500;
+            color: #ff0000;
         }
 
+        /* Icons */
         .ph {
             font-size: 1.4vh;
         }
 
+        /* Animations */
         @keyframes slideIn {
             from {
                 opacity: 0;
@@ -355,6 +358,7 @@
             animation: slideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
+        /* Input Box */
         .input-container {
             position: absolute;
             top: 50%;
@@ -420,35 +424,153 @@
         .input-btn.cancel:hover {
             background: linear-gradient(to bottom, #666, #444);
         }
+
+        /* Notifications */
+        .notification-container {
+            position: fixed;
+            bottom: 2vh;
+            right: 2vh;
+            width: 30vh;
+            z-index: 9999;
+        }
+
+        .notification {
+            background: rgba(10, 6, 20, 0.95);
+            border-radius: 0.4vh;
+            padding: 1vh;
+            margin-bottom: 1vh;
+            box-shadow: 0 0.2vh 0.5vh rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 0, 0, 0.3);
+            backdrop-filter: blur(10px);
+            animation: fadeIn 0.3s ease, fadeOut 0.3s ease 2.7s forwards;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(1vh); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeOut {
+            from { opacity: 1; transform: translateY(0); }
+            to { opacity: 0; transform: translateY(1vh); }
+        }
+
+        .notification-header {
+            font-weight: 600;
+            color: #ff5555;
+            margin-bottom: 0.5vh;
+            font-size: 1.2vh;
+        }
+
+        .notification-body {
+            font-size: 1.1vh;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        /* Keybinding */
+        .keybinding-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            backdrop-filter: blur(5px);
+        }
+
+        .keybinding-box {
+            background: rgba(10, 6, 20, 0.95);
+            border-radius: 0.5vh;
+            padding: 2vh;
+            box-shadow: 0 0 2vh rgba(255, 0, 0, 0.5);
+            border: 1px solid rgba(255, 0, 0, 0.3);
+            text-align: center;
+            width: 30vh;
+        }
+
+        .keybinding-title {
+            font-size: 1.4vh;
+            font-weight: 600;
+            color: #ff5555;
+            margin-bottom: 1vh;
+        }
+
+        .keybinding-instruction {
+            font-size: 1.2vh;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 2vh;
+        }
+
+        .keybinding-key {
+            font-size: 2vh;
+            font-weight: 700;
+            color: white;
+            background: rgba(255, 0, 0, 0.3);
+            border: 1px solid rgba(255, 0, 0, 0.5);
+            border-radius: 0.3vh;
+            padding: 0.5vh 1vh;
+            display: inline-block;
+            margin-bottom: 1vh;
+        }
+
+        .keybinding-cancel {
+            font-size: 1.1vh;
+            color: rgba(255, 255, 255, 0.7);
+            cursor: pointer;
+            text-decoration: underline;
+        }
     </style>
 </head>
 <body>
     <div id="menuContainer" class="menu-container">
+        <!-- Scrollbar -->
         <div id="scrollbarContainer" class="scrollbar-container hidden">
             <div id="scrollbarThumb" class="scrollbar-thumb"></div>
         </div>
 
+        <!-- Banner -->
         <div class="menu-banner">
-            <img id="bannerImage" src="https://media.discordapp.net/attachments/1395189125044240425/1432825938655187065/IpOt9Nc.jpg?ex=690276a4&is=69012524&hm=5ea058fdb88fb75037dbdd238505ac29a50e210c407dfba60ca05d91dccae9bc&=&format=png&width=550&height=309" alt="Banner">
+            <img id="bannerImage" src="  https://media.discordapp.net/attachments/1395189125044240425/1432825938655187065/IpOt9Nc.jpg?ex=690276a4&is=69012524&hm=5ea058fdb88fb75037dbdd238505ac29a50e210c407dfba60ca05d91dccae9bc&=&format=png&width=550&height=309" alt="Banner">
         </div>
 
+        <!-- Tabs -->
         <div id="menuTabs" class="menu-tabs"></div>
 
+        <!-- Menu List -->
         <div class="menu-list-wrapper">
             <div id="menuList" class="menu-list"></div>
         </div>
 
+        <!-- Footer -->
         <div class="menu-footer">
-            <span class="footer-version">ia3x 4.6</span>
+            <span class="footer-version">Beta 1.3 [Premium Edition]</span>
             <span class="footer-counter" id="footerCounter">(0/0)</span>
         </div>
     </div>
 
+    <!-- Input Box -->
     <div id="inputBoxContainer" class="input-container" style="display: none;">
         <input type="text" id="inputBox" class="input-box" placeholder="Enter text here...">
         <div class="input-buttons">
             <button id="inputSubmit" class="input-btn submit">Submit</button>
             <button id="inputCancel" class="input-btn cancel">Cancel</button>
+        </div>
+    </div>
+
+    <!-- Notifications -->
+    <div id="notificationContainer" class="notification-container"></div>
+
+    <!-- Keybinding Overlay -->
+    <div id="keybindingOverlay" class="keybinding-overlay" style="display: none;">
+        <div class="keybinding-box">
+            <div class="keybinding-title">Keybinding Mode</div>
+            <div class="keybinding-instruction">Press any key to bind it to this action</div>
+            <div class="keybinding-key" id="keybindingKey">...</div>
+            <div class="keybinding-cancel" onclick="cancelKeybinding()">Cancel</div>
         </div>
     </div>
 
@@ -460,6 +582,8 @@
         let isVisible = false;
         let position = 'left';
         let inputCallback = null;
+        let keybindingCallback = null;
+        let keybindingActive = false;
 
         const container = document.getElementById('menuContainer');
         const menuList = document.getElementById('menuList');
@@ -472,7 +596,11 @@
         const inputBox = document.getElementById('inputBox');
         const inputSubmit = document.getElementById('inputSubmit');
         const inputCancel = document.getElementById('inputCancel');
+        const notificationContainer = document.getElementById('notificationContainer');
+        const keybindingOverlay = document.getElementById('keybindingOverlay');
+        const keybindingKey = document.getElementById('keybindingKey');
 
+        // Message Handler
         window.addEventListener('message', (event) => {
             const data = event.data;
             const action = data.action;
@@ -503,9 +631,17 @@
                 inputBox.placeholder = data.placeholder || "Enter text...";
                 inputBox.value = "";
                 inputContainer.style.display = 'block';
+            } else if (action === 'showNotification') {
+                showNotification(data.title, data.message);
+            } else if (action === 'startKeybinding') {
+                keybindingCallback = data.callbackId;
+                keybindingActive = true;
+                keybindingOverlay.style.display = 'flex';
+                keybindingKey.textContent = '...';
             }
         });
 
+        // Input Box Handlers
         inputSubmit.addEventListener('click', () => {
             const text = inputBox.value;
             if (inputCallback) {
@@ -523,13 +659,47 @@
             inputCallback = null;
         });
 
-        window.showInputBox = function(placeholder, callbackId) {
-            inputCallback = callbackId;
-            inputBox.placeholder = placeholder || "Enter text...";
-            inputBox.value = "";
-            inputContainer.style.display = 'block';
-        };
+        // Keybinding Handler
+        window.addEventListener('keydown', (event) => {
+            if (keybindingActive) {
+                event.preventDefault();
+                const key = event.key.toUpperCase();
+                keybindingKey.textContent = key;
+                if (keybindingCallback) {
+                    window.parent.postMessage({ action: 'keybound', callbackId: keybindingCallback, key: key }, '*');
+                }
+                keybindingActive = false;
+                keybindingOverlay.style.display = 'none';
+                keybindingCallback = null;
+            }
+        });
 
+        function cancelKeybinding() {
+            if (keybindingCallback) {
+                window.parent.postMessage({ action: 'keybindingCancelled', callbackId: keybindingCallback }, '*');
+            }
+            keybindingActive = false;
+            keybindingOverlay.style.display = 'none';
+            keybindingCallback = null;
+        }
+
+        // Notification System
+        function showNotification(title, message) {
+            const notification = document.createElement('div');
+            notification.className = 'notification';
+            notification.innerHTML = `
+                <div class="notification-header">${title}</div>
+                <div class="notification-body">${message}</div>
+            `;
+            notificationContainer.appendChild(notification);
+
+            // Auto remove after 3 seconds
+            setTimeout(() => {
+                notification.remove();
+            }, 3000);
+        }
+
+        // Render Tabs
         function renderTabs() {
             tabsContainer.innerHTML = '';
             if (tabs.length === 1) {
@@ -547,6 +717,7 @@
             }
         }
 
+        // Render Menu
         function renderMenu() {
             menuList.innerHTML = '';
             
@@ -570,12 +741,10 @@
                 value.className = 'menu-item-value';
 
                 if (item.isSection) {
-                    value.innerHTML = '<i class="ph ph-folder" style="color:#ff6666;"></i>';
-                }
-                else if (item.isBackButton) {
-                    value.innerHTML = '<i class="ph ph-arrow-left" style="color:#ffaa55;"></i>';
-                }
-                else if (item.type === 'checkbox') {
+                    value.innerHTML = '<i class="ph ph-caret-right"></i>';
+                } else if (item.isBackButton) {
+                    value.innerHTML = '<i class="ph ph-arrow-left"></i>';
+                } else if (item.type === 'checkbox') {
                     const toggle = document.createElement('div');
                     toggle.className = 'toggle' + (item.checked ? ' on' : '');
                     value.appendChild(toggle);
@@ -613,6 +782,7 @@
             centerOnSelected();
         }
 
+        // Update Counter
         function updateCounter() {
             const selectableItems = menuItems.filter(item => item.type !== 'divider');
             const selectableIndices = menuItems
@@ -625,6 +795,7 @@
             footerCounter.textContent = `(${current}/${selectableItems.length})`;
         }
 
+        // Center on Selected
         function centerOnSelected() {
             const items = menuList.querySelectorAll('.menu-item');
             const activeItem = items[currentIndex];
@@ -639,6 +810,7 @@
             }
         }
 
+        // Update Scrollbar
         function updateScrollbar() {
             const hasOverflow = menuList.scrollHeight > menuList.clientHeight;
             
@@ -670,8 +842,12 @@
         }
 
         menuList.addEventListener('scroll', updateScrollbar);
+
+        // Initialize
         renderTabs();
         container.classList.toggle('show', isVisible);
+        
+        console.log('Macho DUI Premium Menu Loaded! 🔥');
     </script>
 </body>
 </html>
