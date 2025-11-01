@@ -69,9 +69,10 @@
             background: linear-gradient(to top, rgba(0,0,0,0.85), transparent);
         }
 
-        /* Tabs */
+        /* Tabs */     /* Tabs */
         .menu-tabs {
             display: flex;
+            flex-wrap: wrap; /* السطر الجديد */
             background: rgba(8, 4, 15, 0.75);
             border-radius: 0 0 0.4vh 0.4vh;
             overflow: hidden;
@@ -80,7 +81,8 @@
         }
 
         .menu-tab {
-            flex: 1;
+            flex: 1 1 auto; /* السطر الجديد */
+            min-width: 10vh; /* الحد الأدنى للعرض */
             text-align: center;
             padding: 1.5vh;
             font-size: 1.15vh;
@@ -90,6 +92,18 @@
             transition: all 0.2s ease;
             position: relative;
             background: transparent;
+        }
+
+        .menu-tab.active {
+            background: linear-gradient(0deg, #ff0000 0%, transparent 100%);
+        }
+
+        .menu-tab.single {
+            flex: 1 1 auto; /* السطر الجديد */
+            min-width: 10vh; /* الحد الأدنى للعرض */
+            background: linear-gradient(0deg, #ff0000 0%, transparent 100%);
+            color: white;
+            cursor: default;
         }
 
         .menu-tab.active {
