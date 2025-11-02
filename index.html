@@ -81,9 +81,9 @@
         }
 
         .menu-tab {
-            flex: 1 1 0; /* 👈 هذا السطر مهم */
+            flex: 1 1 0;
             text-align: center;
-            padding: 1.5vh;
+            padding: 1.5vh 0.8vh;
             font-size: 1.15vh;
             font-weight: 500;
             color: white;
@@ -91,10 +91,9 @@
             transition: all 0.2s ease;
             position: relative;
             background: transparent;
-            min-width: 5vh; /* الحد الأدنى للعرض */
-            white-space: nowrap; /* منع النص من الانكسار */
-            overflow: hidden;
-            text-overflow: ellipsis; /* إظهار (...) إذا النص طالع */
+            min-width: 6vh;
+            white-space: nowrap;
+            overflow: visible;
         }
 
         .menu-tab.active {
