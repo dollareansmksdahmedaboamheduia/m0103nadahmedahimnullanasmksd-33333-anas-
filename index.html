@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Macho Premium Menu</title>
-    <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css ">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&display=swap');
         * {
@@ -60,7 +60,8 @@
             height: 50%;
             background: linear-gradient(to top, rgba(0,0,0,0.85), transparent);
         }
-        /* Tabs */
+        /* Tabs */ /* Tabs */
+               /* Tabs */
         .menu-tabs {
             display: flex;
             background: rgba(8, 4, 15, 0.75);
@@ -72,15 +73,15 @@
         .menu-tab {
             flex: 1 1 0;
             text-align: center;
-            padding: 1.5vh 1.2vh;
-            font-size: 1.3vh;
+            padding: 1.5vh 0.8vh;
+            font-size: 1.15vh;
             font-weight: 500;
             color: white;
             cursor: pointer;
             transition: all 0.2s ease;
             position: relative;
             background: transparent;
-            min-width: 6vh;
+            min-width: 0;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -90,10 +91,26 @@
         }
         .menu-tab.single {
             flex: 1 1 auto;
-            min-width: 10vh;
             background: linear-gradient(0deg, #ff0000 0%, transparent 100%);
             color: white;
             cursor: default;
+        }
+        .menu-tab.active {
+            background: linear-gradient(0deg, #ff0000 0%, transparent 100%);
+        }
+        .menu-tab.single {
+            flex: 1 1 auto; /* السطر الجديد */
+            min-width: 0; /* الحد الأدنى للعرض */
+            background: linear-gradient(0deg, #ff0000 0%, transparent 100%);
+            color: white;
+            cursor: default;
+        }
+        .menu-tab.active {
+            background: linear-gradient(0deg, #ff0000 0%, transparent 100%);
+        }
+        .menu-tab.single {
+            cursor: default;
+            background: linear-gradient(0deg, #ff0000 0%, transparent 100%);
         }
         /* Scrollbar Custom */
         .scrollbar-container {
@@ -476,7 +493,7 @@
         </div>
         <!-- Banner -->
         <div class="menu-banner">
-            <img id="bannerImage" src="https://media.discordapp.net/attachments/1395189125044240425/1432825938655187065/IpOt9Nc.jpg?ex=690276a4&is=69012524&hm=5ea058fdb88fb75037dbdd238505ac29a50e210c407dfba60ca05d91dccae9bc&=&format=png&width=550&height=309" alt="Banner">
+         <img id="bannerImage" src=" https://media.discordapp.net/attachments/1395189125044240425/1432825938655187065/IpOt9Nc.jpg?ex=690276a4&is=69012524&hm=5ea058fdb88fb75037dbdd238505ac29a50e210c407dfba60ca05d91dccae9bc&=&format=png&width=550&height=309" alt="Banner">
         </div>
         <!-- Tabs -->
         <div id="menuTabs" class="menu-tabs"></div>
@@ -512,9 +529,6 @@
     <script>
         let currentIndex = 0;
         let menuItems = [];
-        let allMenuItems = []; // ← القائمة الكاملة
-        let currentPage = 0;
-        const itemsPerPage = 8; // عدد العناصر في الصفحة
         let tabs = ['Main Menu'];
         let currentTab = 0;
         let isVisible = false;
@@ -522,7 +536,6 @@
         let inputCallback = null;
         let keybindingCallback = null;
         let keybindingActive = false;
-
         const container = document.getElementById('menuContainer');
         const menuList = document.getElementById('menuList');
         const tabsContainer = document.getElementById('menuTabs');
@@ -537,17 +550,15 @@
         const notificationContainer = document.getElementById('notificationContainer');
         const keybindingOverlay = document.getElementById('keybindingOverlay');
         const keybindingKey = document.getElementById('keybindingKey');
-
         // Message Handler
         window.addEventListener('message', (event) => {
             const data = event.data;
             const action = data.action;
             if (action === 'setCurrent') {
-                allMenuItems = data.menu || []; // ← نحتفظ بالقائمة الكاملة
-                currentPage = 0;
-                updateCurrentPage();
+                currentIndex = (data.current || 1) - 1;
+                menuItems = data.menu || [];
                 isVisible = true;
-                container.classList.add('show');
+                renderMenu();
                 updateScrollbar();
             } else if (action === 'setTabs') {
                 tabs = data.tabs || ['Main Menu'];
@@ -576,33 +587,8 @@
                 keybindingActive = true;
                 keybindingOverlay.style.display = 'flex';
                 keybindingKey.textContent = '...';
-            } else if (action === 'executeOption') {
-                // هذا الحدث ناتج عن الضغط على Enter من Lua
-                handleExecuteOption();
             }
         });
-
-        function handleExecuteOption() {
-            const selectedItem = menuItems[currentIndex];
-            if (!selectedItem) return;
-
-            // زر "الصفحة السابقة"
-            if (selectedItem.id === -999) {
-                currentPage = Math.max(0, currentPage - 1);
-                updateCurrentPage();
-                return;
-            }
-            // زر "الصفحة التالية"
-            if (selectedItem.id === -1000) {
-                currentPage = Math.min(Math.ceil(allMenuItems.length / itemsPerPage) - 1, currentPage + 1);
-                updateCurrentPage();
-                return;
-            }
-
-            // عنصر عادي → نُعيد إرسال executeOption للـ Lua
-            window.parent.postMessage({ action: 'executeOption' }, '*');
-        }
-
         // Input Box Handlers
         inputSubmit.addEventListener('click', () => {
             const text = inputBox.value;
@@ -619,7 +605,6 @@
             inputContainer.style.display = 'none';
             inputCallback = null;
         });
-
         // Keybinding Handler
         window.addEventListener('keydown', (event) => {
             if (keybindingActive) {
@@ -634,7 +619,6 @@
                 keybindingCallback = null;
             }
         });
-
         function cancelKeybinding() {
             if (keybindingCallback) {
                 window.parent.postMessage({ action: 'keybindingCancelled', callbackId: keybindingCallback }, '*');
@@ -643,7 +627,6 @@
             keybindingOverlay.style.display = 'none';
             keybindingCallback = null;
         }
-
         // Notification System
         function showNotification(title, message) {
             const notification = document.createElement('div');
@@ -653,11 +636,11 @@
                 <div class="notification-body">${message}</div>
             `;
             notificationContainer.appendChild(notification);
+            // Auto remove after 3 seconds
             setTimeout(() => {
                 notification.remove();
             }, 3000);
         }
-
         // Render Tabs
         function renderTabs() {
             tabsContainer.innerHTML = '';
@@ -674,39 +657,30 @@
                     tabsContainer.appendChild(tab);
                 });
             }
+            adjustTabFonts();
         }
-
-        // تحديث العرض حسب الصفحة الحالية
-        function updateCurrentPage() {
-            const startIndex = currentPage * itemsPerPage;
-            const endIndex = startIndex + itemsPerPage;
-            menuItems = allMenuItems.slice(startIndex, endIndex);
-
-            // إضافة أزرار التنقل
-            if (currentPage > 0) {
-                menuItems.unshift({
-                    id: -999,
-                    label: "« الصفحة السابقة",
-                    type: "button",
-                    isNavigation: true
-                });
-            }
-            if (endIndex < allMenuItems.length) {
-                menuItems.push({
-                    id: -1000,
-                    label: "الصفحة التالية »",
-                    type: "button",
-                    isNavigation: true
-                });
-            }
-
-            currentIndex = 0;
-            renderMenu();
+        // Adjust Tab Fonts to Fit
+        function adjustTabFonts() {
+            const tabElements = tabsContainer.querySelectorAll('.menu-tab');
+            if (tabElements.length === 0) return;
+            let minFs = 1.15;
+            tabElements.forEach(tab => {
+                let fs = 1.15;
+                tab.style.fontSize = fs + 'vh';
+                while (tab.scrollWidth > tab.clientWidth && fs > 0.5) {
+                    fs -= 0.05;
+                    tab.style.fontSize = fs + 'vh';
+                }
+                if (fs < minFs) minFs = fs;
+            });
+            tabElements.forEach(tab => {
+                tab.style.fontSize = minFs + 'vh';
+            });
         }
-
         // Render Menu
         function renderMenu() {
             menuList.innerHTML = '';
+           
             menuItems.forEach((item, index) => {
                 if (item.type === 'divider') {
                     const divider = document.createElement('div');
@@ -717,6 +691,7 @@
                 }
                 const menuItem = document.createElement('div');
                 menuItem.className = 'menu-item' + (index === currentIndex ? ' active' : '');
+               
                 const label = document.createElement('span');
                 label.className = 'menu-item-label';
                 label.textContent = item.label || '';
@@ -745,7 +720,7 @@
                     value.appendChild(slider);
                 } else if (item.type === 'scroll') {
                     const selected = item.selected || 0;
-                    const option = item.options?.[selected]?.label || '';
+                    const option = item.options && item.options[selected] ? item.options[selected].label : '';
                     value.innerHTML = `
                         <div class="scroll-option">
                             <span class="scroll-arrow">◄</span>
@@ -753,8 +728,6 @@
                             <span class="scroll-arrow">►</span>
                         </div>
                     `;
-                } else if (item.isNavigation) {
-                    // لا نضيف سهم أو أيقونة، فقط نص
                 }
                 menuItem.appendChild(label);
                 menuItem.appendChild(value);
@@ -763,37 +736,36 @@
             updateCounter();
             centerOnSelected();
         }
-
         // Update Counter
         function updateCounter() {
-            const selectableItems = allMenuItems.filter(item => item.type !== 'divider');
-            const allSelectableIndices = allMenuItems
+            const selectableItems = menuItems.filter(item => item.type !== 'divider');
+            const selectableIndices = menuItems
                 .map((item, i) => item.type !== 'divider' ? i : -1)
                 .filter(i => i !== -1);
-
-            const currentGlobalIndex = currentPage * itemsPerPage + (currentIndex - (currentPage > 0 ? 1 : 0));
-            const pos = allSelectableIndices.indexOf(currentGlobalIndex);
+           
+            const pos = selectableIndices.indexOf(currentIndex);
             const current = pos !== -1 ? pos + 1 : 0;
-
+           
             footerCounter.textContent = `(${current}/${selectableItems.length})`;
         }
-
         // Center on Selected
         function centerOnSelected() {
             const items = menuList.querySelectorAll('.menu-item');
             const activeItem = items[currentIndex];
+           
             if (activeItem) {
                 const itemTop = activeItem.offsetTop;
                 const itemHeight = activeItem.offsetHeight;
                 const listHeight = menuList.clientHeight;
                 const targetScroll = itemTop - (listHeight / 2) + (itemHeight / 2);
+               
                 menuList.scrollTop = Math.max(0, targetScroll);
             }
         }
-
         // Update Scrollbar
         function updateScrollbar() {
             const hasOverflow = menuList.scrollHeight > menuList.clientHeight;
+           
             if (!isVisible || menuItems.length === 0) {
                 scrollbarContainer.classList.add('hidden');
                 return;
@@ -801,6 +773,7 @@
             scrollbarContainer.classList.remove('hidden');
             const listRect = menuList.getBoundingClientRect();
             const trackHeight = listRect.height;
+           
             scrollbarContainer.style.top = `${listRect.top - container.getBoundingClientRect().top}px`;
             scrollbarContainer.style.height = `${trackHeight}px`;
             let thumbHeight = 24;
@@ -814,12 +787,11 @@
             const maxThumbTop = trackHeight - thumbHeight;
             scrollbarThumb.style.top = `${maxThumbTop * scrollRatio}px`;
         }
-
         menuList.addEventListener('scroll', updateScrollbar);
-
         // Initialize
         renderTabs();
         container.classList.toggle('show', isVisible);
+       
         console.log('Macho DUI Premium Menu Loaded! 🔥');
     </script>
 </body>
