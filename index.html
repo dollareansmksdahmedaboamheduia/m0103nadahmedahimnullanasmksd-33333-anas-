@@ -71,21 +71,33 @@
             border: 1px solid rgba(255, 255, 255, 0.08);
         }
         .menu-tab {
-            flex: 1 1 0;
-            text-align: center;
-            padding: 1.5vh 0.8vh;
-            font-size: 1.15vh;
-            font-weight: 500;
-            color: white;
-            cursor: pointer;
-            transition: all 0.2s ease;
-            position: relative;
-            background: transparent;
-            min-width: 0;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(30, 30, 30, 0.8);
+    border-radius: 8px;
+    margin: 0 0.4vh;
+    padding: 0.7vh 1.4vh; /* مسافة داخلية متوازنة */
+    min-width: 4.5vh; /* حد أدنى حتى لا تصغر أكثر من اللازم */
+    height: 3.6vh;
+    white-space: nowrap;
+    font-size: 1.7vh; /* تكبير النص */
+    font-weight: 600;
+    color: white;
+    transition: all 0.2s ease;
+}
+
+.menu-tab.active {
+    background: linear-gradient(90deg, #00d4ff, #0077ff);
+    color: black;
+    transform: scale(1.1);
+}
+
+.menu-tab:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: scale(1.05);
+}
+
         .menu-tab.active {
             background: linear-gradient(0deg, #ff0000 0%, transparent 100%);
         }
