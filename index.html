@@ -69,8 +69,6 @@
             overflow: hidden;
             backdrop-filter: blur(6px);
             border: 1px solid rgba(255, 255, 255, 0.08);
-            flex-wrap: wrap;
-            justify-content: space-between;
         }
         .menu-tab {
             flex: 1 1 0;
@@ -83,7 +81,7 @@
             transition: all 0.2s ease;
             position: relative;
             background: transparent;
-            min-width: 0;
+            min-width: 6vh;
             white-space: nowrap;
             overflow: hidden;
             text-overflow: ellipsis;
@@ -102,7 +100,7 @@
         }
         .menu-tab.single {
             flex: 1 1 auto; /* السطر الجديد */
-            min-width: 0; /* الحد الأدنى للعرض */
+            min-width: 10vh; /* الحد الأدنى للعرض */
             background: linear-gradient(0deg, #ff0000 0%, transparent 100%);
             color: white;
             cursor: default;
@@ -222,10 +220,10 @@
             left: 1.2vh;
             right: 1.2vh;
             height: 0.15vh;
-            background: linear-gradient(90deg, 
-                transparent, 
-                rgba(255, 0, 0, 0.5) 20%, 
-                rgba(255, 0, 0, 0.5) 80%, 
+            background: linear-gradient(90deg,
+                transparent,
+                rgba(255, 0, 0, 0.5) 20%,
+                rgba(255, 0, 0, 0.5) 80%,
                 transparent
             );
         }
