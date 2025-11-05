@@ -4,16 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Macho Premium Menu</title>
-<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
+<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css ">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&display=swap');
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
         body {
             font-family: 'Cairo', 'Segoe UI', sans-serif;
             background: transparent;
@@ -21,7 +19,6 @@
             overflow: hidden;
             direction: rtl;
         }
-
         .menu-container {
             position: fixed;
             top: 50%;
@@ -31,16 +28,13 @@
             opacity: 0;
             transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
         }
-
         .menu-container.show {
             opacity: 1;
         }
-
         .menu-container.right {
             left: auto;
             right: 6.5vh;
         }
-
         /* Banner */
         .menu-banner {
             width: 100%;
@@ -51,14 +45,12 @@
             margin-bottom: -0.2vh;
             box-shadow: 0 0.3vh 0.8vh rgba(0, 0, 0, 0.6);
         }
-
         .menu-banner img {
             width: 100%;
             height: 100%;
             object-fit: cover;
             display: block;
         }
-
         .menu-banner::after {
             content: '';
             position: absolute;
@@ -68,8 +60,7 @@
             height: 50%;
             background: linear-gradient(to top, rgba(0,0,0,0.85), transparent);
         }
-
-        /* Tabs */     /* Tabs */
+        /* Tabs */ /* Tabs */
                /* Tabs */
         .menu-tabs {
             display: flex;
@@ -79,7 +70,6 @@
             backdrop-filter: blur(6px);
             border: 1px solid rgba(255, 255, 255, 0.08);
         }
-
         .menu-tab {
             flex: 1 1 0;
             text-align: center;
@@ -91,43 +81,37 @@
             transition: all 0.2s ease;
             position: relative;
             background: transparent;
-            min-width: 6vh;
+            min-width: 0;
             white-space: nowrap;
-            overflow: visible;
+            overflow: hidden;
+            text-overflow: ellipsis;
         }
-
         .menu-tab.active {
             background: linear-gradient(0deg, #ff0000 0%, transparent 100%);
         }
-
         .menu-tab.single {
             flex: 1 1 auto;
             background: linear-gradient(0deg, #ff0000 0%, transparent 100%);
             color: white;
             cursor: default;
         }
-
         .menu-tab.active {
             background: linear-gradient(0deg, #ff0000 0%, transparent 100%);
         }
-
         .menu-tab.single {
             flex: 1 1 auto; /* السطر الجديد */
-            min-width: 10vh; /* الحد الأدنى للعرض */
+            min-width: 0; /* الحد الأدنى للعرض */
             background: linear-gradient(0deg, #ff0000 0%, transparent 100%);
             color: white;
             cursor: default;
         }
-
         .menu-tab.active {
             background: linear-gradient(0deg, #ff0000 0%, transparent 100%);
         }
-
         .menu-tab.single {
             cursor: default;
             background: linear-gradient(0deg, #ff0000 0%, transparent 100%);
         }
-
         /* Scrollbar Custom */
         .scrollbar-container {
             position: absolute;
@@ -139,11 +123,9 @@
             z-index: 100;
             transition: opacity 0.2s ease;
         }
-
         .scrollbar-container.hidden {
             opacity: 0;
         }
-
         .scrollbar-thumb {
             position: absolute;
             left: 0;
@@ -153,7 +135,6 @@
             border-radius: 0.3vh;
             transition: top 0.08s linear, height 0.12s ease;
         }
-
         /* Menu List */
         .menu-list-wrapper {
             background: rgba(0, 0, 0, 0.85);
@@ -163,18 +144,15 @@
             backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.05);
         }
-
         .menu-list {
             max-height: 33.6vh;
             overflow-y: auto;
             scrollbar-width: none;
             -ms-overflow-style: none;
         }
-
         .menu-list::-webkit-scrollbar {
             display: none;
         }
-
         /* Menu Items */
         .menu-item {
             padding: 0.9vh 1.2vh;
@@ -191,7 +169,6 @@
             gap: 1vh;
             margin: 0.2vh 0;
         }
-
         .menu-item::before {
             content: '';
             position: absolute;
@@ -202,27 +179,22 @@
             background: #ff0000;
             transition: width 0.2s ease;
         }
-
         .menu-item.active {
             background: rgba(100, 0, 0, 0.6);
         }
-
         .menu-item.active::before {
             width: 0.3vh;
         }
-
         .menu-item-label {
             flex: 1;
             text-align: right;
             font-size: 1.2vh;
         }
-
         .menu-item-value {
             display: flex;
             align-items: center;
             gap: 0.5vh;
         }
-
         /* Divider */
         .menu-divider {
             position: relative;
@@ -233,7 +205,6 @@
             margin: 0.8vh 0;
             pointer-events: none;
         }
-
         .menu-divider span {
             color: rgba(255, 255, 255, 0.7);
             font-size: 1.0vh;
@@ -243,21 +214,19 @@
             background: rgba(0, 0, 0, 0.85);
             z-index: 1;
         }
-
         .menu-divider::before {
             content: '';
             position: absolute;
             left: 1.2vh;
             right: 1.2vh;
             height: 0.15vh;
-            background: linear-gradient(90deg, 
-                transparent, 
-                rgba(255, 0, 0, 0.5) 20%, 
-                rgba(255, 0, 0, 0.5) 80%, 
+            background: linear-gradient(90deg,
+                transparent,
+                rgba(255, 0, 0, 0.5) 20%,
+                rgba(255, 0, 0, 0.5) 80%,
                 transparent
             );
         }
-
         /* Toggle Switch */
         .toggle {
             appearance: none;
@@ -269,7 +238,6 @@
             cursor: pointer;
             transition: background 0.2s ease;
         }
-
         .toggle::before {
             content: '';
             position: absolute;
@@ -281,16 +249,13 @@
             left: 0.2vh;
             transition: transform 0.2s ease;
         }
-
         .toggle.on {
             background: rgba(255, 0, 0, 0.3);
         }
-
         .toggle.on::before {
             background: #ff0000;
             transform: translateX(1.65vh);
         }
-
         /* Slider */
         .range {
             width: 7.5vh;
@@ -300,7 +265,6 @@
             border: 0;
             -webkit-appearance: none;
         }
-
         .range::-webkit-slider-runnable-track {
             height: 0.55vh;
             border-radius: 0.75vh;
@@ -310,7 +274,6 @@
                 #2e2e2e var(--pct) 100%
             );
         }
-
         .range::-webkit-slider-thumb {
             -webkit-appearance: none;
             width: 1.1vh;
@@ -321,11 +284,9 @@
             cursor: pointer;
             transition: transform 0.1s ease;
         }
-
         .range:active::-webkit-slider-thumb {
             transform: scale(1.15);
         }
-
         /* Scroll Options */
         .scroll-option {
             display: flex;
@@ -334,12 +295,10 @@
             font-size: 1.2vh;
             color: rgba(255, 255, 255, 0.9);
         }
-
         .scroll-arrow {
             color: #ff0000;
             font-size: 1.0vh;
         }
-
         /* Footer */
         .menu-footer {
             margin-top: 0.5vh;
@@ -353,22 +312,18 @@
             align-items: center;
             border: 1px solid rgba(255, 255, 255, 0.05);
         }
-
         .footer-version {
             font-weight: 500;
             color: rgba(255, 255, 255, 0.8);
         }
-
         .footer-counter {
             font-weight: 500;
             color: #ff0000;
         }
-
         /* Icons */
         .ph {
             font-size: 1.4vh;
         }
-
         /* Animations */
         @keyframes slideIn {
             from {
@@ -380,11 +335,9 @@
                 transform: translateY(-50%) translateX(0);
             }
         }
-
         .menu-container.show {
             animation: slideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
-
         /* Input Box */
         .input-container {
             position: absolute;
@@ -400,7 +353,6 @@
             border: 1px solid rgba(255, 0, 0, 0.3);
             width: 25vh;
         }
-
         .input-box {
             width: 100%;
             padding: 0.8vh;
@@ -412,18 +364,15 @@
             font-size: 1.2vh;
             margin-bottom: 1vh;
         }
-
         .input-box:focus {
             outline: none;
             border-color: #ff5555;
             box-shadow: 0 0 0.8vh rgba(255, 85, 85, 0.3);
         }
-
         .input-buttons {
             display: flex;
             gap: 1vh;
         }
-
         .input-btn {
             flex: 1;
             padding: 0.8vh;
@@ -435,23 +384,18 @@
             cursor: pointer;
             transition: all 0.2s ease;
         }
-
         .input-btn.submit {
             background: linear-gradient(to bottom, #ff3333, #cc0000);
         }
-
         .input-btn.submit:hover {
             background: linear-gradient(to bottom, #ff5555, #dd0000);
         }
-
         .input-btn.cancel {
             background: linear-gradient(to bottom, #444, #222);
         }
-
         .input-btn.cancel:hover {
             background: linear-gradient(to bottom, #666, #444);
         }
-
         /* Notifications */
         .notification-container {
             position: fixed;
@@ -460,7 +404,6 @@
             width: 30vh;
             z-index: 9999;
         }
-
         .notification {
             background: rgba(10, 6, 20, 0.95);
             border-radius: 0.4vh;
@@ -471,29 +414,24 @@
             backdrop-filter: blur(10px);
             animation: fadeIn 0.3s ease, fadeOut 0.3s ease 2.7s forwards;
         }
-
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(1vh); }
             to { opacity: 1; transform: translateY(0); }
         }
-
         @keyframes fadeOut {
             from { opacity: 1; transform: translateY(0); }
             to { opacity: 0; transform: translateY(1vh); }
         }
-
         .notification-header {
             font-weight: 600;
             color: #ff5555;
             margin-bottom: 0.5vh;
             font-size: 1.2vh;
         }
-
         .notification-body {
             font-size: 1.1vh;
             color: rgba(255, 255, 255, 0.9);
         }
-
         /* Keybinding */
         .keybinding-overlay {
             position: fixed;
@@ -508,7 +446,6 @@
             z-index: 10000;
             backdrop-filter: blur(5px);
         }
-
         .keybinding-box {
             background: rgba(10, 6, 20, 0.95);
             border-radius: 0.5vh;
@@ -518,20 +455,17 @@
             text-align: center;
             width: 30vh;
         }
-
         .keybinding-title {
             font-size: 1.4vh;
             font-weight: 600;
             color: #ff5555;
             margin-bottom: 1vh;
         }
-
         .keybinding-instruction {
             font-size: 1.2vh;
             color: rgba(255, 255, 255, 0.9);
             margin-bottom: 2vh;
         }
-
         .keybinding-key {
             font-size: 2vh;
             font-weight: 700;
@@ -543,7 +477,6 @@
             display: inline-block;
             margin-bottom: 1vh;
         }
-
         .keybinding-cancel {
             font-size: 1.1vh;
             color: rgba(255, 255, 255, 0.7);
@@ -558,27 +491,22 @@
         <div id="scrollbarContainer" class="scrollbar-container hidden">
             <div id="scrollbarThumb" class="scrollbar-thumb"></div>
         </div>
-
         <!-- Banner -->
         <div class="menu-banner">
-         <img id="bannerImage" src="https://media.discordapp.net/attachments/1395189125044240425/1432825938655187065/IpOt9Nc.jpg?ex=690276a4&is=69012524&hm=5ea058fdb88fb75037dbdd238505ac29a50e210c407dfba60ca05d91dccae9bc&=&format=png&width=550&height=309" alt="Banner">
+         <img id="bannerImage" src=" https://media.discordapp.net/attachments/1395189125044240425/1432825938655187065/IpOt9Nc.jpg?ex=690276a4&is=69012524&hm=5ea058fdb88fb75037dbdd238505ac29a50e210c407dfba60ca05d91dccae9bc&=&format=png&width=550&height=309" alt="Banner">
         </div>
-
         <!-- Tabs -->
         <div id="menuTabs" class="menu-tabs"></div>
-
         <!-- Menu List -->
         <div class="menu-list-wrapper">
             <div id="menuList" class="menu-list"></div>
         </div>
-
         <!-- Footer -->
         <div class="menu-footer">
             <span class="footer-version">ia3x 4.6 [Discord.gg/ia3x]</span>
             <span class="footer-counter" id="footerCounter">(0/0)</span>
         </div>
     </div>
-
     <!-- Input Box -->
     <div id="inputBoxContainer" class="input-container" style="display: none;">
         <input type="text" id="inputBox" class="input-box" placeholder="Enter text here...">
@@ -587,10 +515,8 @@
             <button id="inputCancel" class="input-btn cancel">Cancel</button>
         </div>
     </div>
-
     <!-- Notifications -->
     <div id="notificationContainer" class="notification-container"></div>
-
     <!-- Keybinding Overlay -->
     <div id="keybindingOverlay" class="keybinding-overlay" style="display: none;">
         <div class="keybinding-box">
@@ -600,7 +526,6 @@
             <div class="keybinding-cancel" onclick="cancelKeybinding()">Cancel</div>
         </div>
     </div>
-
     <script>
         let currentIndex = 0;
         let menuItems = [];
@@ -611,7 +536,6 @@
         let inputCallback = null;
         let keybindingCallback = null;
         let keybindingActive = false;
-
         const container = document.getElementById('menuContainer');
         const menuList = document.getElementById('menuList');
         const tabsContainer = document.getElementById('menuTabs');
@@ -626,12 +550,10 @@
         const notificationContainer = document.getElementById('notificationContainer');
         const keybindingOverlay = document.getElementById('keybindingOverlay');
         const keybindingKey = document.getElementById('keybindingKey');
-
         // Message Handler
         window.addEventListener('message', (event) => {
             const data = event.data;
             const action = data.action;
-
             if (action === 'setCurrent') {
                 currentIndex = (data.current || 1) - 1;
                 menuItems = data.menu || [];
@@ -667,7 +589,6 @@
                 keybindingKey.textContent = '...';
             }
         });
-
         // Input Box Handlers
         inputSubmit.addEventListener('click', () => {
             const text = inputBox.value;
@@ -677,7 +598,6 @@
             inputContainer.style.display = 'none';
             inputCallback = null;
         });
-
         inputCancel.addEventListener('click', () => {
             if (inputCallback) {
                 window.parent.postMessage({ action: 'inputCancelled', callbackId: inputCallback }, '*');
@@ -685,7 +605,6 @@
             inputContainer.style.display = 'none';
             inputCallback = null;
         });
-
         // Keybinding Handler
         window.addEventListener('keydown', (event) => {
             if (keybindingActive) {
@@ -700,7 +619,6 @@
                 keybindingCallback = null;
             }
         });
-
         function cancelKeybinding() {
             if (keybindingCallback) {
                 window.parent.postMessage({ action: 'keybindingCancelled', callbackId: keybindingCallback }, '*');
@@ -709,7 +627,6 @@
             keybindingOverlay.style.display = 'none';
             keybindingCallback = null;
         }
-
         // Notification System
         function showNotification(title, message) {
             const notification = document.createElement('div');
@@ -719,13 +636,11 @@
                 <div class="notification-body">${message}</div>
             `;
             notificationContainer.appendChild(notification);
-
             // Auto remove after 3 seconds
             setTimeout(() => {
                 notification.remove();
             }, 3000);
         }
-
         // Render Tabs
         function renderTabs() {
             tabsContainer.innerHTML = '';
@@ -742,12 +657,30 @@
                     tabsContainer.appendChild(tab);
                 });
             }
+            adjustTabFonts();
         }
-
+        // Adjust Tab Fonts to Fit
+        function adjustTabFonts() {
+            const tabElements = tabsContainer.querySelectorAll('.menu-tab');
+            if (tabElements.length === 0) return;
+            let minFs = 1.15;
+            tabElements.forEach(tab => {
+                let fs = 1.15;
+                tab.style.fontSize = fs + 'vh';
+                while (tab.scrollWidth > tab.clientWidth && fs > 0.5) {
+                    fs -= 0.05;
+                    tab.style.fontSize = fs + 'vh';
+                }
+                if (fs < minFs) minFs = fs;
+            });
+            tabElements.forEach(tab => {
+                tab.style.fontSize = minFs + 'vh';
+            });
+        }
         // Render Menu
         function renderMenu() {
             menuList.innerHTML = '';
-            
+           
             menuItems.forEach((item, index) => {
                 if (item.type === 'divider') {
                     const divider = document.createElement('div');
@@ -756,17 +689,14 @@
                     menuList.appendChild(divider);
                     return;
                 }
-
                 const menuItem = document.createElement('div');
                 menuItem.className = 'menu-item' + (index === currentIndex ? ' active' : '');
-                
+               
                 const label = document.createElement('span');
                 label.className = 'menu-item-label';
                 label.textContent = item.label || '';
-
                 const value = document.createElement('div');
                 value.className = 'menu-item-value';
-
                 if (item.isSection) {
                     value.innerHTML = '<i class="ph ph-caret-right"></i>';
                 } else if (item.isBackButton) {
@@ -799,81 +729,69 @@
                         </div>
                     `;
                 }
-
                 menuItem.appendChild(label);
                 menuItem.appendChild(value);
                 menuList.appendChild(menuItem);
             });
-
             updateCounter();
             centerOnSelected();
         }
-
         // Update Counter
         function updateCounter() {
             const selectableItems = menuItems.filter(item => item.type !== 'divider');
             const selectableIndices = menuItems
                 .map((item, i) => item.type !== 'divider' ? i : -1)
                 .filter(i => i !== -1);
-            
+           
             const pos = selectableIndices.indexOf(currentIndex);
             const current = pos !== -1 ? pos + 1 : 0;
-            
+           
             footerCounter.textContent = `(${current}/${selectableItems.length})`;
         }
-
         // Center on Selected
         function centerOnSelected() {
             const items = menuList.querySelectorAll('.menu-item');
             const activeItem = items[currentIndex];
-            
+           
             if (activeItem) {
                 const itemTop = activeItem.offsetTop;
                 const itemHeight = activeItem.offsetHeight;
                 const listHeight = menuList.clientHeight;
                 const targetScroll = itemTop - (listHeight / 2) + (itemHeight / 2);
-                
+               
                 menuList.scrollTop = Math.max(0, targetScroll);
             }
         }
-
         // Update Scrollbar
         function updateScrollbar() {
             const hasOverflow = menuList.scrollHeight > menuList.clientHeight;
-            
+           
             if (!isVisible || menuItems.length === 0) {
                 scrollbarContainer.classList.add('hidden');
                 return;
             }
-
             scrollbarContainer.classList.remove('hidden');
-
             const listRect = menuList.getBoundingClientRect();
             const trackHeight = listRect.height;
-            
+           
             scrollbarContainer.style.top = `${listRect.top - container.getBoundingClientRect().top}px`;
             scrollbarContainer.style.height = `${trackHeight}px`;
-
             let thumbHeight = 24;
             if (hasOverflow) {
                 const ratio = menuList.clientHeight / menuList.scrollHeight;
                 thumbHeight = Math.max(18, trackHeight * ratio);
             }
-
             scrollbarThumb.style.height = `${thumbHeight}px`;
-
             const maxScroll = Math.max(0, menuList.scrollHeight - menuList.clientHeight);
             const scrollRatio = maxScroll > 0 ? menuList.scrollTop / maxScroll : 0;
             const maxThumbTop = trackHeight - thumbHeight;
             scrollbarThumb.style.top = `${maxThumbTop * scrollRatio}px`;
         }
-
         menuList.addEventListener('scroll', updateScrollbar);
-
         // Initialize
         renderTabs();
         container.classList.toggle('show', isVisible);
-        
+       
         console.log('Macho DUI Premium Menu Loaded! 🔥');
     </script>
 </body>
