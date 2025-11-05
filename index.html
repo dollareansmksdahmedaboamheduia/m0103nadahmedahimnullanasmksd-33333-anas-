@@ -66,12 +66,13 @@
             display: flex;
             background: rgba(8, 4, 15, 0.75);
             border-radius: 0 0 0.4vh 0.4vh;
-            overflow: hidden;
+            overflow: visible;
+            flex-wrap: wrap;
             backdrop-filter: blur(6px);
             border: 1px solid rgba(255, 255, 255, 0.08);
         }
         .menu-tab {
-            flex: 1 1 0;
+            flex: 0 1 auto;
             text-align: center;
             padding: 1.5vh 0.8vh;
             font-size: 1.15vh;
@@ -493,7 +494,7 @@
         </div>
         <!-- Banner -->
         <div class="menu-banner">
-         <img id="bannerImage" src=" https://media.discordapp.net/attachments/1395189125044240425/1432825938655187065/IpOt9Nc.jpg?ex=690276a4&is=69012524&hm=5ea058fdb88fb75037dbdd238505ac29a50e210c407dfba60ca05d91dccae9bc&=&format=png&width=550&height=309" alt="Banner">
+         <img id="bannerImage" src="https://media.discordapp.net/attachments/1395189125044240425/1432825938655187065/IpOt9Nc.jpg?ex=690276a4&is=69012524&hm=5ea058fdb88fb75037dbdd238505ac29a50e210c407dfba60ca05d91dccae9bc&=&format=png&width=550&height=309" alt="Banner">
         </div>
         <!-- Tabs -->
         <div id="menuTabs" class="menu-tabs"></div>
@@ -657,25 +658,6 @@
                     tabsContainer.appendChild(tab);
                 });
             }
-            adjustTabFonts();
-        }
-        // Adjust Tab Fonts to Fit
-        function adjustTabFonts() {
-            const tabElements = tabsContainer.querySelectorAll('.menu-tab');
-            if (tabElements.length === 0) return;
-            let minFs = 1.15;
-            tabElements.forEach(tab => {
-                let fs = 1.15;
-                tab.style.fontSize = fs + 'vh';
-                while (tab.scrollWidth > tab.clientWidth && fs > 0.5) {
-                    fs -= 0.05;
-                    tab.style.fontSize = fs + 'vh';
-                }
-                if (fs < minFs) minFs = fs;
-            });
-            tabElements.forEach(tab => {
-                tab.style.fontSize = minFs + 'vh';
-            });
         }
         // Render Menu
         function renderMenu() {
