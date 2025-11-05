@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Macho Premium Menu</title>
-<link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css ">
+    <link rel="stylesheet" href="https://unpkg.com/@phosphor-icons/web@2.1.1/src/regular/style.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&display=swap');
         * {
@@ -60,19 +60,27 @@
             height: 50%;
             background: linear-gradient(to top, rgba(0,0,0,0.85), transparent);
         }
-        /* Tabs */ /* Tabs */
-               /* Tabs */
+
+        /* === Tabs مع تمرير أفقي خفي === */
         .menu-tabs {
             display: flex;
             background: rgba(8, 4, 15, 0.75);
             border-radius: 0 0 0.4vh 0.4vh;
-            overflow: hidden;
+            overflow-x: auto;
+            overflow-y: hidden;
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+            scroll-behavior: smooth;
             backdrop-filter: blur(6px);
             border: 1px solid rgba(255, 255, 255, 0.08);
+            direction: ltr; /* ضروري لـ scrollIntoView في وضع RTL */
         }
+        .menu-tabs::-webkit-scrollbar {
+            display: none;
+        }
+
         .menu-tab {
-            flex: 1 1 0;
-            text-align: center;
+            flex: 0 0 auto;
             padding: 1.5vh 1.2vh;
             font-size: 1.3vh;
             font-weight: 500;
@@ -81,37 +89,23 @@
             transition: all 0.2s ease;
             position: relative;
             background: transparent;
-            min-width: 6vh;
             white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
+            min-width: 6vh;
+            text-align: center;
+            direction: rtl; /* العودة للعربية داخل التبويب */
+            unicode-bidi: plaintext;
         }
         .menu-tab.active {
             background: linear-gradient(0deg, #ff0000 0%, transparent 100%);
         }
         .menu-tab.single {
             flex: 1 1 auto;
+            min-width: 10vh;
             background: linear-gradient(0deg, #ff0000 0%, transparent 100%);
             color: white;
             cursor: default;
         }
-        .menu-tab.active {
-            background: linear-gradient(0deg, #ff0000 0%, transparent 100%);
-        }
-        .menu-tab.single {
-            flex: 1 1 auto; /* السطر الجديد */
-            min-width: 10vh; /* الحد الأدنى للعرض */
-            background: linear-gradient(0deg, #ff0000 0%, transparent 100%);
-            color: white;
-            cursor: default;
-        }
-        .menu-tab.active {
-            background: linear-gradient(0deg, #ff0000 0%, transparent 100%);
-        }
-        .menu-tab.single {
-            cursor: default;
-            background: linear-gradient(0deg, #ff0000 0%, transparent 100%);
-        }
+
         /* Scrollbar Custom */
         .scrollbar-container {
             position: absolute;
@@ -135,6 +129,7 @@
             border-radius: 0.3vh;
             transition: top 0.08s linear, height 0.12s ease;
         }
+
         /* Menu List */
         .menu-list-wrapper {
             background: rgba(0, 0, 0, 0.85);
@@ -153,6 +148,7 @@
         .menu-list::-webkit-scrollbar {
             display: none;
         }
+
         /* Menu Items */
         .menu-item {
             padding: 0.9vh 1.2vh;
@@ -195,6 +191,7 @@
             align-items: center;
             gap: 0.5vh;
         }
+
         /* Divider */
         .menu-divider {
             position: relative;
@@ -227,6 +224,7 @@
                 transparent
             );
         }
+
         /* Toggle Switch */
         .toggle {
             appearance: none;
@@ -256,6 +254,7 @@
             background: #ff0000;
             transform: translateX(1.65vh);
         }
+
         /* Slider */
         .range {
             width: 7.5vh;
@@ -287,6 +286,7 @@
         .range:active::-webkit-slider-thumb {
             transform: scale(1.15);
         }
+
         /* Scroll Options */
         .scroll-option {
             display: flex;
@@ -299,6 +299,7 @@
             color: #ff0000;
             font-size: 1.0vh;
         }
+
         /* Footer */
         .menu-footer {
             margin-top: 0.5vh;
@@ -320,10 +321,12 @@
             font-weight: 500;
             color: #ff0000;
         }
+
         /* Icons */
         .ph {
             font-size: 1.4vh;
         }
+
         /* Animations */
         @keyframes slideIn {
             from {
@@ -338,6 +341,7 @@
         .menu-container.show {
             animation: slideIn 0.4s cubic-bezier(0.4, 0, 0.2, 1);
         }
+
         /* Input Box */
         .input-container {
             position: absolute;
@@ -396,6 +400,7 @@
         .input-btn.cancel:hover {
             background: linear-gradient(to bottom, #666, #444);
         }
+
         /* Notifications */
         .notification-container {
             position: fixed;
@@ -432,6 +437,7 @@
             font-size: 1.1vh;
             color: rgba(255, 255, 255, 0.9);
         }
+
         /* Keybinding */
         .keybinding-overlay {
             position: fixed;
@@ -487,27 +493,22 @@
 </head>
 <body>
     <div id="menuContainer" class="menu-container">
-        <!-- Scrollbar -->
         <div id="scrollbarContainer" class="scrollbar-container hidden">
             <div id="scrollbarThumb" class="scrollbar-thumb"></div>
         </div>
-        <!-- Banner -->
         <div class="menu-banner">
-         <img id="bannerImage" src=" https://media.discordapp.net/attachments/1395189125044240425/1432825938655187065/IpOt9Nc.jpg?ex=690276a4&is=69012524&hm=5ea058fdb88fb75037dbdd238505ac29a50e210c407dfba60ca05d91dccae9bc&=&format=png&width=550&height=309" alt="Banner">
+            <img id="bannerImage" src="https://media.discordapp.net/attachments/1395189125044240425/1432825938655187065/IpOt9Nc.jpg?ex=690276a4&is=69012524&hm=5ea058fdb88fb75037dbdd238505ac29a50e210c407dfba60ca05d91dccae9bc&=&format=png&width=550&height=309" alt="Banner">
         </div>
-        <!-- Tabs -->
         <div id="menuTabs" class="menu-tabs"></div>
-        <!-- Menu List -->
         <div class="menu-list-wrapper">
             <div id="menuList" class="menu-list"></div>
         </div>
-        <!-- Footer -->
         <div class="menu-footer">
             <span class="footer-version">ia3x 4.6 [Discord.gg/ia3x]</span>
             <span class="footer-counter" id="footerCounter">(0/0)</span>
         </div>
     </div>
-    <!-- Input Box -->
+
     <div id="inputBoxContainer" class="input-container" style="display: none;">
         <input type="text" id="inputBox" class="input-box" placeholder="Enter text here...">
         <div class="input-buttons">
@@ -515,9 +516,9 @@
             <button id="inputCancel" class="input-btn cancel">Cancel</button>
         </div>
     </div>
-    <!-- Notifications -->
+
     <div id="notificationContainer" class="notification-container"></div>
-    <!-- Keybinding Overlay -->
+
     <div id="keybindingOverlay" class="keybinding-overlay" style="display: none;">
         <div class="keybinding-box">
             <div class="keybinding-title">Keybinding Mode</div>
@@ -526,6 +527,7 @@
             <div class="keybinding-cancel" onclick="cancelKeybinding()">Cancel</div>
         </div>
     </div>
+
     <script>
         let currentIndex = 0;
         let menuItems = [];
@@ -536,6 +538,7 @@
         let inputCallback = null;
         let keybindingCallback = null;
         let keybindingActive = false;
+
         const container = document.getElementById('menuContainer');
         const menuList = document.getElementById('menuList');
         const tabsContainer = document.getElementById('menuTabs');
@@ -550,7 +553,19 @@
         const notificationContainer = document.getElementById('notificationContainer');
         const keybindingOverlay = document.getElementById('keybindingOverlay');
         const keybindingKey = document.getElementById('keybindingKey');
-        // Message Handler
+
+        // تأكد أن التبويب النشط مرئي عند التغيير
+        function ensureActiveTabVisible() {
+            const activeTab = tabsContainer.querySelector('.menu-tab.active');
+            if (activeTab) {
+                activeTab.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'nearest',
+                    inline: 'nearest'
+                });
+            }
+        }
+
         window.addEventListener('message', (event) => {
             const data = event.data;
             const action = data.action;
@@ -566,7 +581,7 @@
                 renderTabs();
             } else if (action === 'setTabIndex') {
                 currentTab = data.index || 0;
-                renderTabs();
+                renderTabs(); // ← هنا سيتم عرض التبويب الجديد وتمرير العرض إليه
             } else if (action === 'setVisible') {
                 isVisible = data.visible !== undefined ? data.visible : true;
                 container.classList.toggle('show', isVisible);
@@ -589,7 +604,7 @@
                 keybindingKey.textContent = '...';
             }
         });
-        // Input Box Handlers
+
         inputSubmit.addEventListener('click', () => {
             const text = inputBox.value;
             if (inputCallback) {
@@ -598,6 +613,7 @@
             inputContainer.style.display = 'none';
             inputCallback = null;
         });
+
         inputCancel.addEventListener('click', () => {
             if (inputCallback) {
                 window.parent.postMessage({ action: 'inputCancelled', callbackId: inputCallback }, '*');
@@ -605,7 +621,7 @@
             inputContainer.style.display = 'none';
             inputCallback = null;
         });
-        // Keybinding Handler
+
         window.addEventListener('keydown', (event) => {
             if (keybindingActive) {
                 event.preventDefault();
@@ -619,6 +635,7 @@
                 keybindingCallback = null;
             }
         });
+
         function cancelKeybinding() {
             if (keybindingCallback) {
                 window.parent.postMessage({ action: 'keybindingCancelled', callbackId: keybindingCallback }, '*');
@@ -627,7 +644,7 @@
             keybindingOverlay.style.display = 'none';
             keybindingCallback = null;
         }
-        // Notification System
+
         function showNotification(title, message) {
             const notification = document.createElement('div');
             notification.className = 'notification';
@@ -636,12 +653,11 @@
                 <div class="notification-body">${message}</div>
             `;
             notificationContainer.appendChild(notification);
-            // Auto remove after 3 seconds
             setTimeout(() => {
                 notification.remove();
             }, 3000);
         }
-        // Render Tabs
+
         function renderTabs() {
             tabsContainer.innerHTML = '';
             if (tabs.length === 1) {
@@ -654,14 +670,18 @@
                     const tab = document.createElement('div');
                     tab.className = 'menu-tab' + (i === currentTab ? ' active' : '');
                     tab.textContent = tabName;
+                    // يمكنك تفعيل هذا لدعم النقر يدويًا، أو اتركه معطّلًا
+                    // tab.addEventListener('click', () => {
+                    //     window.parent.postMessage({ action: 'switchTab', index: i }, '*');
+                    // });
                     tabsContainer.appendChild(tab);
                 });
             }
+            ensureActiveTabVisible(); // ← مهم جدًا
         }
-        // Render Menu
+
         function renderMenu() {
             menuList.innerHTML = '';
-           
             menuItems.forEach((item, index) => {
                 if (item.type === 'divider') {
                     const divider = document.createElement('div');
@@ -672,7 +692,6 @@
                 }
                 const menuItem = document.createElement('div');
                 menuItem.className = 'menu-item' + (index === currentIndex ? ' active' : '');
-               
                 const label = document.createElement('span');
                 label.className = 'menu-item-label';
                 label.textContent = item.label || '';
@@ -717,36 +736,31 @@
             updateCounter();
             centerOnSelected();
         }
-        // Update Counter
+
         function updateCounter() {
             const selectableItems = menuItems.filter(item => item.type !== 'divider');
             const selectableIndices = menuItems
                 .map((item, i) => item.type !== 'divider' ? i : -1)
                 .filter(i => i !== -1);
-           
             const pos = selectableIndices.indexOf(currentIndex);
             const current = pos !== -1 ? pos + 1 : 0;
-           
             footerCounter.textContent = `(${current}/${selectableItems.length})`;
         }
-        // Center on Selected
+
         function centerOnSelected() {
             const items = menuList.querySelectorAll('.menu-item');
             const activeItem = items[currentIndex];
-           
             if (activeItem) {
                 const itemTop = activeItem.offsetTop;
                 const itemHeight = activeItem.offsetHeight;
                 const listHeight = menuList.clientHeight;
                 const targetScroll = itemTop - (listHeight / 2) + (itemHeight / 2);
-               
                 menuList.scrollTop = Math.max(0, targetScroll);
             }
         }
-        // Update Scrollbar
+
         function updateScrollbar() {
             const hasOverflow = menuList.scrollHeight > menuList.clientHeight;
-           
             if (!isVisible || menuItems.length === 0) {
                 scrollbarContainer.classList.add('hidden');
                 return;
@@ -754,7 +768,6 @@
             scrollbarContainer.classList.remove('hidden');
             const listRect = menuList.getBoundingClientRect();
             const trackHeight = listRect.height;
-           
             scrollbarContainer.style.top = `${listRect.top - container.getBoundingClientRect().top}px`;
             scrollbarContainer.style.height = `${trackHeight}px`;
             let thumbHeight = 24;
@@ -768,11 +781,12 @@
             const maxThumbTop = trackHeight - thumbHeight;
             scrollbarThumb.style.top = `${maxThumbTop * scrollRatio}px`;
         }
+
         menuList.addEventListener('scroll', updateScrollbar);
-        // Initialize
+
         renderTabs();
         container.classList.toggle('show', isVisible);
-       
+
         console.log('Macho DUI Premium Menu Loaded! 🔥');
     </script>
 </body>
