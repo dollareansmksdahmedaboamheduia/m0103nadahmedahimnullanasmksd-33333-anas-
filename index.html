@@ -69,35 +69,25 @@
             overflow: hidden;
             backdrop-filter: blur(6px);
             border: 1px solid rgba(255, 255, 255, 0.08);
+            flex-wrap: wrap;
+            justify-content: space-between;
         }
         .menu-tab {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    background-color: rgba(30, 30, 30, 0.8);
-    border-radius: 8px;
-    margin: 0 0.4vh;
-    padding: 0.7vh 1.4vh; /* مسافة داخلية متوازنة */
-    min-width: 4.5vh; /* حد أدنى حتى لا تصغر أكثر من اللازم */
-    height: 3.6vh;
-    white-space: nowrap;
-    font-size: 1.7vh; /* تكبير النص */
-    font-weight: 600;
-    color: white;
-    transition: all 0.2s ease;
-}
-
-.menu-tab.active {
-    background: linear-gradient(90deg, #00d4ff, #0077ff);
-    color: black;
-    transform: scale(1.1);
-}
-
-.menu-tab:hover {
-    background: rgba(255, 255, 255, 0.15);
-    transform: scale(1.05);
-}
-
+            flex: 1 1 0;
+            text-align: center;
+            padding: 1.5vh 1.2vh;
+            font-size: 1.3vh;
+            font-weight: 500;
+            color: white;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            position: relative;
+            background: transparent;
+            min-width: 0;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
         .menu-tab.active {
             background: linear-gradient(0deg, #ff0000 0%, transparent 100%);
         }
@@ -232,10 +222,10 @@
             left: 1.2vh;
             right: 1.2vh;
             height: 0.15vh;
-            background: linear-gradient(90deg,
-                transparent,
-                rgba(255, 0, 0, 0.5) 20%,
-                rgba(255, 0, 0, 0.5) 80%,
+            background: linear-gradient(90deg, 
+                transparent, 
+                rgba(255, 0, 0, 0.5) 20%, 
+                rgba(255, 0, 0, 0.5) 80%, 
                 transparent
             );
         }
@@ -669,25 +659,6 @@
                     tabsContainer.appendChild(tab);
                 });
             }
-            adjustTabFonts();
-        }
-        // Adjust Tab Fonts to Fit
-        function adjustTabFonts() {
-            const tabElements = tabsContainer.querySelectorAll('.menu-tab');
-            if (tabElements.length === 0) return;
-            let minFs = 1.15;
-            tabElements.forEach(tab => {
-                let fs = 1.15;
-                tab.style.fontSize = fs + 'vh';
-                while (tab.scrollWidth > tab.clientWidth && fs > 0.5) {
-                    fs -= 0.05;
-                    tab.style.fontSize = fs + 'vh';
-                }
-                if (fs < minFs) minFs = fs;
-            });
-            tabElements.forEach(tab => {
-                tab.style.fontSize = minFs + 'vh';
-            });
         }
         // Render Menu
         function renderMenu() {
